@@ -1,111 +1,92 @@
 "use client";
 
-import { useState } from "react";
-
-interface Todo {
-  id: number;
-  text: string;
-  completed: boolean;
-}
+import Link from "next/link";
+import "./home.css";
 
 export default function Home() {
 
-  const [task, setTask] = useState("");
-  const [todos, setTodos] = useState<Todo[]>([
-    {
-      id: 1,
-      text: "Build Next.js Todo App",
-      completed: false,
-    },
-  ]);
-
-  const addTodo = () => {
-    if (!task.trim()) return;
-
-    setTodos([
-      ...todos,
-      {
-        id: Date.now(),
-        text: task,
-        completed: false,
-      },
-    ]);
-
-    setTask("");
-  };
-
-  const toggleTodo = (id: number) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id
-          ? { ...todo, completed: !todo.completed }
-          : todo
-      )
-    );
-  };
-
-  const deleteTodo = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
-
-  const completedTasks = todos.filter((todo) => todo.completed).length;
-
   return (
-    <>
-      <main className="container">
-        <div className="todo-card">
-          <div className="header">
-            <h1>📝 Todo App</h1>
-            <p>Stay organized and productive</p>
+    <main className="home">
+      <section className="hero">
+        <div className="hero-content">
+          <h1>
+            Organize Your Day
+            <span> Effortlessly</span>
+          </h1>
+
+          <p>
+            Manage tasks, stay productive, and never miss important work
+            again with ITs-TODO-App.
+          </p>
+
+          <div className="hero-buttons">
+            <button className="primary-btn">
+              <Link href="/login">Get Started</Link>
+            </button>
+
+            <button className="secondary-btn">
+              Learn More
+            </button>
           </div>
-
-          <div className="input-group">
-            <input
-              type="text"
-              placeholder="Add a new task..."
-              value={task}
-              onChange={(e) => setTask(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && addTodo()}
-            />
-
-            <button onClick={addTodo}>Add</button>
-          </div>
-
-          <div className="stats">
-            <span>Total: {todos.length}</span>
-            <span>Completed: {completedTasks}</span>
-          </div>
-
-          <ul className="todo-list">
-            {todos.map((todo) => (
-              <li key={todo.id} className="todo-item">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={todo.completed}
-                    onChange={() => toggleTodo(todo.id)}
-                  />
-
-                  <span
-                    className={
-                      todo.completed ? "completed task-text" : "task-text"
-                    }
-                  >
-                    {todo.text}
-                  </span>
-                </label>
-
-                <button
-                  className="delete-btn"
-                  onClick={() => deleteTodo(todo.id)}
-                >
-                  ✕
-                </button>
-              </li>
-            ))}
-          </ul>
         </div>
-      </main>
-    </>
+
+        <div className="hero-card">
+          <div className="task-card">
+            <h3>Today's Tasks</h3>
+
+            <div className="task completed">
+              ✓ Complete UI Design
+            </div>
+
+            <div className="task">
+              ○ Connect Backend APIs
+            </div>
+
+            <div className="task">
+              ○ Deploy Application
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="features">
+        <h2>Why Choose ITs-TODO-App?</h2>
+
+        <div className="feature-grid">
+          <div className="feature-card">
+            <h3>⚡ Fast</h3>
+            <p>
+              Create and manage tasks instantly.
+            </p>
+          </div>
+
+          <div className="feature-card">
+            <h3>🔒 Secure</h3>
+            <p>
+              Your tasks remain protected and private.
+            </p>
+          </div>
+
+          <div className="feature-card">
+            <h3>📱 Responsive</h3>
+            <p>
+              Works perfectly on desktop, tablet, and mobile.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="cta">
+        <h2>Ready to Boost Productivity?</h2>
+
+        <p>
+          Start managing your tasks smarter today.
+        </p>
+
+        <button className="primary-btn" >
+          <Link href="/register">Create Account</Link>
+        </button>
+      </section>
+    </main>
   );
 }
